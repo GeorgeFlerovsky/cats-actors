@@ -24,5 +24,9 @@ trait MailboxQueue[F[_], A] {
   def tryTake: F[Option[A]]
   def take: F[A]
   def size: F[Int]
+
+  /** Prefer this to `size == 0`: on the JVM it is O(1), where `size` is O(n). */
+  def isEmpty: F[Boolean]
+
   def tryTakeN(max: Option[Int]): F[List[A]]
 }
